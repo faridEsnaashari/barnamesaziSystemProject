@@ -1,6 +1,9 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
+
+app.use(bodyParser.json())
 
 const userRoute = require('./api/routes/user/user');
 const gamestatusRoute = require('./api/routes/gamestatus/gamestatus');
