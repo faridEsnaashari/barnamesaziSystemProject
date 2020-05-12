@@ -1,32 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+
+const handleGetRequest = require('./get');
+const handlePutRequest = require('./put');
+
 router.get('/', (req, res, next) => {
-    res.status(200);
-    res.json({
-        msg : 'get'
-    });
-});
-
-router.post('/', (req, res, next) => {
-    res.status(200);
-    res.json({
-        msg : 'post'
-    });
-});
-
-router.delete('/', (req, res, next) => {
-    res.status(200);
-    res.json({
-        msg : 'delete'
-    });
+    handleGetRequest(req, res);
 });
 
 router.put('/', (req, res, next) => {
-    res.status(200);
-    res.json({
-        msg : 'put'
-    });
+    handlePutRequest(req, res);
 });
 
 
