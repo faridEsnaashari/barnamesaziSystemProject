@@ -1,0 +1,57 @@
+create database barnamesaziSystemProject;
+use barnamesaziSystemProject;
+
+--
+-- Table structure for table `gamestatus`
+--
+
+CREATE TABLE `gamestatus` (
+  `label` varchar(50),
+  `startedtime` char(24),
+  `duration` int
+);
+
+--
+-- Table structure for table `question`
+--
+
+CREATE TABLE `question` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `question` varchar(300),
+  `answer1` varchar(100) ,
+  `answer2` varchar(100) ,
+  `answer3` varchar(100) ,
+  `answer4` varchar(100) ,
+  `currect` tinyint,
+  PRIMARY KEY (`id`)
+);
+
+--
+-- Table structure for table `store`
+--
+
+CREATE TABLE `store` (
+  `name` char(30),
+  `count` int,
+  `price` int
+);
+
+--
+-- Dumping data for table `store`
+--
+
+INSERT INTO `store` VALUES ('coin',0,0),('heath',0,0),('ticket',0,0);
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `username` varchar(50),
+  `phonenumber` varchar(11),
+  `name` varchar(50),
+  `teamcolor` varchar(10),
+  `health` varchar(3),
+  `ticket` varchar(3),
+  `score` varchar(4) 
+);
