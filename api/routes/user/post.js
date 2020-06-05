@@ -20,9 +20,9 @@ function handlePostRequest(req, res)
         req.body.phonenumber,
         req.body.name,
         req.body.teamColor,
-        req.body.health,
-        req.body.ticket,
-        req.body.score 
+        0,
+        0,
+        0
     ];
 
     sqlConnection.query(query, [data], function (err, result, fields) {
@@ -42,10 +42,7 @@ function checkParameters(req)
     if(req.body.username == undefined || req.body.username == null ||
         req.body.phonenumber == undefined || req.body.phonenumber == null ||
         req.body.name == undefined || req.body.name == null ||
-        req.body.teamColor == undefined || req.body.teamColor == null ||
-        req.body.health == undefined || req.body.health == null ||
-        req.body.ticket == undefined || req.body.ticket == null ||
-        req.body.score == undefined || req.body.score == null
+        req.body.teamColor == undefined || req.body.teamColor == null
     )
     {
         return false;
