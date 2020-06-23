@@ -26,11 +26,22 @@ function handlePostRequest(req, res)
     ];
 
     sqlConnection.query(query, [data], function (err, result, fields) {
-        if (err) throw err;
+        if (err){
+            if(err.code === 'ER_DUP_ENTRY'){
+                responseJson = {
+                    "message" : "user existed"
+                }
+                responseGenerator(res, 409, responseJson);
+                return;
+            }
+            else 
+            {
+                throw err;
+            }
+        }
 
         responseJson = {
               "message": "user created"
-            
         };
         responseGenerator(res, 201, responseJson);
     });
