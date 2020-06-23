@@ -33,14 +33,16 @@ function handleGetRequest(req, res)
             return;
         }
         const user = {
-            username : result[0].username,
-            phonenumber : result[0].phonenumber,
-            name : result[0].name,
-            teamColor : result[0].teamColor,
-            health : result[0].health,
-            ticket : result[0].ticket,
-            score : result[0].score
-        }
+            user : {
+                username : result[0].username,
+                phonenumber : result[0].phonenumber,
+                name : result[0].name,
+                teamColor : result[0].teamColor,
+                health : result[0].health,
+                ticket : result[0].ticket,
+                score : result[0].score
+            }
+        };
         responseGenerator(res, 200, user);
     });
 
