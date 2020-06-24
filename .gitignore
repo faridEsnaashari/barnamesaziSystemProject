@@ -1,5 +1,7 @@
 *.sw*
 
+/config.txt
+
 /apiDocument/swaggerFile.yaml
 
 **/Dockerfile
