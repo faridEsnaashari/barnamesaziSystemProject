@@ -11,6 +11,18 @@ CREATE TABLE `gamestatus` (
   `duration` int
 );
 
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `userid` int,
+  `refid` int,
+  `amount` int
+);
+
+
 --
 -- Table structure for table `question`
 --
