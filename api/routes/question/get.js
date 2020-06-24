@@ -9,6 +9,7 @@ function handleGetRequest(req, res)
         if (err) throw err;
 
         const question = {
+            id : result[0].id,
             question: result[0].question,
             answer1 : result[0].answer1,
             answer2 : result[0].answer2,
