@@ -12,9 +12,23 @@ function handlePayRequest(req, res){
         return;
     }
     const amount = req.query.amount;
-    const userId = token.verify(req.query.usertoken);
+
+    const userToken = req.query.usertoken;
+
+    let userId = null;
+    try{
+        userId = token.verify(userToken);
+    }
+    catch(err){
+        const responseJson = {
+            message : "user unauthorized"
+        };
+        responseGenerator(res, 401, responseJson);
+
+        return;
+    }
     
-    zarinpal.pay(res, amount, userId["userId"]);
+    zarinpal.pay(res, amount, userId);
 };
 
 function checkParameters(req){
