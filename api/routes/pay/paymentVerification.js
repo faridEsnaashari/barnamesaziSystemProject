@@ -1,6 +1,5 @@
 const responseGenerator = require('../../responseGenerator');
 const zarinpal = require('../../zarinpal');
-const token = require('../../token');
 const sqlConnection = require('../../sqlConnection');
 
 function handlePaymentVerificationRequest(req, res){
