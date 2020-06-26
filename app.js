@@ -10,6 +10,7 @@ const gamestatusRoute = require('./api/routes/gamestatus/gamestatus');
 const questionRoute = require('./api/routes/question/question');
 const storeRoute = require('./api/routes/store/store');
 const payRoute = require('./api/routes/pay/pay');
+const signInRoute = require('./api/routes/signIn/signIn');
 
 
 app.use('/user', userRoute);
@@ -17,5 +18,6 @@ app.use('/gamestatus', gamestatusRoute);
 app.use('/question', questionRoute);
 app.use('/store', storeRoute);
 app.use('/pay', payRoute);
+app.use('/signin', signInRoute);
 
 module.exports = app;
