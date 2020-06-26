@@ -1,9 +1,9 @@
 const responseGenerator = require('../../responseGenerator');
 const sqlConnection = require('../../sqlConnection');
+const token = require('../../token');
 
 function handleDeleteRequest(req, res)
 {
-    console.log(req.body.username);
     if(!checkParameters(req))
     {
         const responseJson = {
@@ -14,19 +14,33 @@ function handleDeleteRequest(req, res)
         return;
     }
 
-    let query = null;
-    if(req.body.phonenumber != undefined){
-        query = "delete from user where phonenumber = '" + req.body.phonenumber + "'";
+    const userToken = req.body.usertoken;
+
+    let userId = null;
+    try{
+        userId = token.verify(userToken);
     }
-    else{
-        query = "delete FROM user where username = '" + req.body.username + "'";
+    catch(err){
+        const responseJson = {
+            message : "user unauthorized"
+        };
+        responseGenerator(res, 401, responseJson);
+
+        return;
     }
 
-    console.log(query);
+    const query = "delete from user where userId = '" + userId + "'";
+//    let query = null;
+//    if(req.body.phonenumber != undefined){
+//        query = "delete from user where phonenumber = '" + req.body.phonenumber + "'";
+//    }
+//    else{
+//        query = "delete FROM user where username = '" + req.body.username + "'";
+//    }
+
     sqlConnection.query(query, function (err, result, fields) {
         if (err) throw err;
 
-        console.log(result);
         if(result.affectedRows === 0)
         {
             const responseJson = {
@@ -45,8 +59,12 @@ function handleDeleteRequest(req, res)
 
 function checkParameters(req)
 {
-    if(req.body.phonenumber == undefined && req.body.username == undefined)
-    {
+//    if(req.body.phonenumber == undefined && req.body.username == undefined)
+//    {
+//        return false;
+//    }
+//    return true;
+    if(req.body.usertoken == undefined){
         return false;
     }
     return true;

@@ -1,5 +1,6 @@
 const responseGenerator = require('../../responseGenerator');
 const sqlConnection = require('../../sqlConnection');
+const token = require('../../token');
 
 function handleGetRequest(req, res)
 {
@@ -13,13 +14,30 @@ function handleGetRequest(req, res)
         return;
     }
 
-    let query = null;
-    if(req.query.phonenumber != undefined){
-        query = "SELECT * FROM user where phonenumber = '" + req.query.phonenumber + "'";
+    const userToken = req.query.usertoken;
+
+    let userId = null;
+    try{
+        userId = token.verify(userToken);
     }
-    else{
-        query = "SELECT * FROM user where username = '" + req.query.username + "'";
+    catch(err){
+        const responseJson = {
+            message : "user unauthorized"
+        };
+        responseGenerator(res, 401, responseJson);
+
+        return;
     }
+
+    const query = "SELECT * FROM user where userId = '" + userId + "'";
+ 
+//    let query = null;
+//    if(req.query.phonenumber != undefined){
+//        query = "SELECT * FROM user where phonenumber = '" + req.query.phonenumber + "'";
+//    }
+//    else{
+//        query = "SELECT * FROM user where username = '" + req.query.username + "'";
+//    }
 
     sqlConnection.query(query, function (err, result, fields) {
         if (err) throw err;
@@ -50,10 +68,16 @@ function handleGetRequest(req, res)
 
 function checkParameters(req)
 {
-    if(req.query.phonenumber == undefined && req.query.username == undefined)
+//    if(req.query.phonenumber == undefined && req.query.username == undefined)
+//    {
+//        return false;
+//    }
+//    return true;
+    if(req.query.usertoken == undefined)
     {
         return false;
     }
     return true;
 }
+
 module.exports = handleGetRequest;

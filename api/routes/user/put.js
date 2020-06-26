@@ -1,5 +1,6 @@
 const responseGenerator = require('../../responseGenerator');
 const sqlConnection = require('../../sqlConnection');
+const token = require('../../token');
 
 function handlePutRequest(req, res)
 {
@@ -12,8 +13,22 @@ function handlePutRequest(req, res)
 
         return;
     }
+    
+    const userToken = req.body.usertoken;
+    let userId = null;
+    try{
+        userId = token.verify(userToken);
+    }
+    catch(err){
+        const responseJson = {
+            message : "user unauthorized"
+        };
+        responseGenerator(res, 401, responseJson);
 
-    const query = generateUpdateQuery(req);
+        return;
+    }
+
+    const query = generateUpdateQuery(req, userId);
 
     sqlConnection.query(query, function (err, result, fields) {
         if (err) throw err;
@@ -33,7 +48,7 @@ function handlePutRequest(req, res)
 
 }
 
-function generateUpdateQuery(req){
+function generateUpdateQuery(req, userId){
     let query = "update user " +
         "set ";
     if(!(req.body.name == undefined)){
@@ -53,22 +68,26 @@ function generateUpdateQuery(req){
     }
 
 
-    query += " where ";
-    if(!(req.body.username == undefined)){
-       query += "username = " + "\'" + req.body.username + "\'"; 
-    }
-    if(!(req.body.phonenumber == undefined)){
-       query += "phonenumber = " + "\'" + req.body.phonenumber + "\'"; 
-    }
+    query += " where userId = " + "\'" + userId + "\'";
+//    if(!(req.body.username == undefined)){
+//       query += "username = " + "\'" + req.body.username + "\'"; 
+//    }
+//    if(!(req.body.phonenumber == undefined)){
+//       query += "phonenumber = " + "\'" + req.body.phonenumber + "\'"; 
+//    }
 
     return query;
 }
 
 function checkParameters(req)
 {
-    if((req.body.username == undefined || req.body.username == null) &&
-        (req.body.phonenumber == undefined || req.body.phonenumber == null)
-    )
+//    if((req.body.username == undefined || req.body.username == null) &&
+//        (req.body.phonenumber == undefined || req.body.phonenumber == null)
+//    )
+//    {
+//        return false;
+//    }
+    if(req.body.usertoken == undefined || req.body.usertoken == null)
     {
         return false;
     }
