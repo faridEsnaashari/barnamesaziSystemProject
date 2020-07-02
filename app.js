@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const responseGenerator = require('./api/responseGenerator');
 
 const app = express();
 
@@ -21,5 +22,13 @@ app.use('/store', storeRoute);
 app.use('/pay', payRoute);
 app.use('/signin', signInRoute);
 app.use('/topscores', topScoresRoute);
+
+
+app.use((req, res, next) => {
+    const responseJson = {
+        message : "wrong route or method"
+    };
+    responseGenerator(res, 404, responseJson);
+});
 
 module.exports = app;
