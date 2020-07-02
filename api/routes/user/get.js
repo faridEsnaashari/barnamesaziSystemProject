@@ -55,7 +55,7 @@ function handleGetRequest(req, res)
                 username : result[0].username,
                 phonenumber : result[0].phonenumber,
                 name : result[0].name,
-                teamColor : result[0].teamColor,
+                teamColor : result[0].teamcolor,
                 health : result[0].health,
                 ticket : result[0].ticket,
                 score : result[0].score
