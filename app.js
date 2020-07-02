@@ -11,6 +11,7 @@ const questionRoute = require('./api/routes/question/question');
 const storeRoute = require('./api/routes/store/store');
 const payRoute = require('./api/routes/pay/pay');
 const signInRoute = require('./api/routes/signIn/signIn');
+const topScoresRoute = require('./api/routes/topScores/topScores');
 
 
 app.use('/user', userRoute);
@@ -19,5 +20,6 @@ app.use('/question', questionRoute);
 app.use('/store', storeRoute);
 app.use('/pay', payRoute);
 app.use('/signin', signInRoute);
+app.use('/topscores', topScoresRoute);
 
 module.exports = app;
