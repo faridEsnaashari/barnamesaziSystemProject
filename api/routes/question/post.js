@@ -45,13 +45,6 @@ function checkParameters(req)
         req.body.currect == undefined || req.body.currect == null
     )
     {
-        console.log(req.body.question);
-        console.log(req.body.answer1);
-        console.log(req.body.answer2);
-        console.log(req.body.answer3);
-        console.log(req.body.answer4);
-        console.log(req.body.currect);
-
         return false;
     }
     return true;
