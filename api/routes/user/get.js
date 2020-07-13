@@ -50,7 +50,7 @@ function handleGetRequest(req, res)
             responseGenerator(res, 404, responseJson);
             return;
         }
-        const user = {
+        let user = {
             user : {
                 username : result[0].username,
                 phonenumber : result[0].phonenumber,
@@ -61,7 +61,17 @@ function handleGetRequest(req, res)
                 score : result[0].score
             }
         };
-        responseGenerator(res, 200, user);
+        
+        const teamMembersQuery = "select count(teamColor) as number, teamcolor from user group by teamcolor";
+        sqlConnection.query(teamMembersQuery, function (err, result, fields) {
+            let teamsMembersNumber = {};
+            teamsMembersNumber[result[0].teamcolor] = result[0]['number'];
+            teamsMembersNumber[result[1].teamcolor] = result[1]['number'];
+
+            user['teamsMembersNumber'] = teamsMembersNumber;
+
+            responseGenerator(res, 200, user);
+        });
     });
 
 }
