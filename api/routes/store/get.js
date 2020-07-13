@@ -8,19 +8,46 @@ function handleGetRequest(req, res)
     sqlConnection.query(query, function (err, result, fields) {
         if (err) throw err;
 
-        console.log(result);
+
+        let coinArray = [];
+        let healthArray = [];
+        let ticketArray = [];
+
+        for(const rownumber in result){
+            if(result[rownumber].name === 'coin'){
+                if(result[rownumber].count === 0){
+                    continue;
+                }
+                coinArray.push({
+                    count : result[rownumber].count,
+                    price : result[rownumber].price
+                });
+            }
+            if(result[rownumber].name === 'health'){
+                if(result[rownumber].count === 0){
+                    continue;
+                }
+                healthArray.push({
+                    count : result[rownumber].count,
+                    price : result[rownumber].price
+                });
+            }
+            if(result[rownumber].name === 'ticket'){
+                if(result[rownumber].count === 0){
+                    continue;
+                }
+                ticketArray.push({
+                    count : result[rownumber].count,
+                    price : result[rownumber].price
+                });
+            }
+        }
+
         const storeItem = {
-            coin : {
-                count : result[0].count, 
-                price : result[0].price
-            },
-            health : {
-                count : result[1].count, 
-                price : result[1].price
-            },
-            ticket : {
-                count : result[2].count, 
-                price : result[2].price
+            items:{
+                coin : coinArray,
+                health : healthArray,
+                ticket : ticketArray
             }
         };
         responseGenerator(res, 200, storeItem);
