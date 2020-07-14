@@ -68,7 +68,7 @@ function generateUpdateQuery(req, userId){
     }
 
 
-    query += " where userId = " + "\'" + userId + "\'";
+    query += " where userId = " + userId;
 //    if(!(req.body.username == undefined)){
 //       query += "username = " + "\'" + req.body.username + "\'"; 
 //    }
@@ -98,6 +98,16 @@ function checkParameters(req)
         (req.body.ticket == undefined || req.body.ticket == null) &&
         (req.body.score == undefined || req.body.score == null)
     )
+    {
+        return false;
+    }
+    if(!(req.body.health == undefined || req.body.health == null))
+       if(!(req.body.health === "decrease" || req.body.health === "current")) &&
+    {
+        return false;
+    }
+    if(!(req.body.ticket == undefined || req.body.ticket == null))
+        (!(req.body.ticket  === "decrease" || req.body.ticket === "current"))
     {
         return false;
     }
