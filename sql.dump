@@ -43,9 +43,11 @@ CREATE TABLE `question` (
 --
 
 CREATE TABLE `store` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `name` char(30),
   `count` int,
-  `price` int
+  `price` int,
+  PRIMARY KEY (`id`)
 );
 
 --
