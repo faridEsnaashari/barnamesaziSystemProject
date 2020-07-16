@@ -6,9 +6,12 @@ use barnamesaziSystemProject;
 --
 
 CREATE TABLE `gamestatus` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `label` varchar(50),
-  `startedtime` char(24),
-  `duration` int
+  `duration` int,
+  `startedtime` char(24) default null,
+  `active` boolean default false,
+  PRIMARY KEY (`id`)
 );
 
 
