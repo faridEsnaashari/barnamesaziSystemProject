@@ -73,3 +73,27 @@ CREATE TABLE `user` (
   `ticket` varchar(3),
   `score` varchar(4) 
 );
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE activeNextGame(
+    IN  inputId int,
+    IN  inputStartedtime char(24)
+    
+)
+BEGIN
+    update gamestatus
+    set active = false
+    where id = inputId;
+
+    update gamestatus
+    set
+    active = true,
+    startedtime = inputStartedtime
+    where id = inputId+1;
+END //
+
+DELIMITER ;
+
