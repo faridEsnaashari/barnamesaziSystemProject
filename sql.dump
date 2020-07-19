@@ -71,7 +71,13 @@ CREATE TABLE `user` (
   `teamcolor` varchar(10),
   `health` varchar(3),
   `ticket` varchar(3),
-  `score` varchar(4) 
+  `score` int 
+);
+
+CREATE TABLE `activegamescore` (
+  `userId` int,
+  `gameId` int,
+  `score` int 
 );
 
 
