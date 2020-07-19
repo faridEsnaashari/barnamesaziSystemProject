@@ -50,7 +50,8 @@ CREATE TABLE `store` (
   `name` char(30),
   `count` int,
   `price` int,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT unique_name_and_count UNIQUE (name, count)
 );
 
 --
