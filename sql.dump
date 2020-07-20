@@ -108,6 +108,7 @@ BEGIN
     active = true,
     startedtime = inputStartedtime
     where id = inputId+1;
+    delete from answeredquestion;
 END //
 
 DELIMITER ;
