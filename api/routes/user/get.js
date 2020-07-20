@@ -58,6 +58,7 @@ function handleGetRequest(req, res)
                 teamColor : result[0].teamcolor,
                 health : result[0].health,
                 ticket : result[0].ticket,
+                coin : result[0].coin,
                 score : result[0].score
             }
         };
@@ -83,7 +84,7 @@ function checkParameters(req)
 //        return false;
 //    }
 //    return true;
-    if(req.query.usertoken == undefined)
+    if(req.query.usertoken == undefined || req.query.usertoken == null)
     {
         return false;
     }
