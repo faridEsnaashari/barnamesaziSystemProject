@@ -1,48 +1,87 @@
 const responseGenerator = require('../../responseGenerator');
 const sqlConnection = require('../../sqlConnection');
 
-function handleGetRequest(req, res)
-{
-    if(!checkParameters(req))
-    {
-        const responseJson = {
-            message : "bad parameter provided"
-        };
-        responseGenerator(res, 400, responseJson);
-
-        return;
-    }
-
-    const query = "select * from gamestatus where label = '" + req.query.label + "'";
-
-    sqlConnection.query(query, function (err, result, fields) {
+function handleGetRequest(req, res) {
+    const checkGameTimeQuery = "select * from gamestatus where active = true";
+    sqlConnection.query(checkGameTimeQuery, function (err, result, fields) {
         if (err) throw err;
 
-        if(result[0] == undefined)
-        {
-            const responseJson = {
-              "message": "game not found"
-            };
-            responseGenerator(res, 404, responseJson);
-            return;
+        const duration = result[0].duration;
+        const startedTime = result[0].startedtime;
+        const id = result[0].id;
+        if(itsTheTime(duration, startedTime)){
+            const now = getNow();
+            const setTheNextGameQuery = "call activeNextGame(" + parseInt(id) + ", \'" + now + "\')";
+            console.log(setTheNextGameQuery);
+            sqlConnection.query(setTheNextGameQuery, function (err, result, fields) {
+                if(err) throw err;
+                prepareResponse(req, res);
+            });
         }
-        const game = {
-            label : result[0].label,
-            startedtime : result[0].startedtime,
-            duration : result[0].duration
+        else{
+            prepareResponse(req, res);
+        }
+    });
+}
+
+function itsTheTime(duration, startedTime){
+    gameTime = new Date(startedTime);
+    gameTimeInMiliSecond = gameTime.getTime();
+    gameTimeInSecond = Math.round(gameTimeInMiliSecond / 1000);
+
+    currentTime = new Date();
+    currentTimeInMiliSecond = currentTime.getTime();
+    currentTimeInSecond = Math.round(currentTimeInMiliSecond / 1000);
+
+    durationInSecond = duration * 3600;
+
+    if((currentTimeInSecond - (gameTimeInSecond + durationInSecond)) > 0){
+        return true;
+    }
+    return false;
+}
+
+function getNow(){
+    now = new Date();
+    return now.toISOString();
+}
+
+function prepareResponse(req, res){
+    let getGameStatusQuery;
+    if(req.query.activegame != undefined && req.query.activegame === "true"){
+        getGameStatusQuery = "select * from gamestatus where active = true";
+    }
+    else{
+        getGameStatusQuery = "select * from gamestatus";
+    }
+    sqlConnection.query(getGameStatusQuery, function (err, result, fields) {
+        if (err) throw err;
+
+//        if(result[0] == undefined)
+//        {
+//            const responseJson = {
+//              "message": "game not found"
+//            };
+//            responseGenerator(res, 404, responseJson);
+//            return;
+//        }
+        
+        let games = [];
+        for(game in result) {
+            gameObject = {
+                label : result[game].label,
+                duration : result[game].duration,
+                startedTime : result[game].startedtime,
+                active : result[game].active
+            }
+            games.push(gameObject);
+        }
+        const response = {
+            games : games
         };
-        responseGenerator(res, 200, game);
+        responseGenerator(res, 200, response);
+        return;
     });
 
 }
-
-function checkParameters(req)
-{
-    if(req.query.label == undefined)
-    {
-        return false;
-    }
-    return true;
-}
-
 module.exports = handleGetRequest;
