@@ -9,9 +9,9 @@ function handleGetRequest(req, res)
         if (err) throw err;
 
 
-        let coinArray = [];
         let healthArray = [];
         let ticketArray = [];
+        let coinArray = [];
 
         for(const rownumber in result){
             if(result[rownumber].name === 'coin'){
@@ -19,6 +19,7 @@ function handleGetRequest(req, res)
                     continue;
                 }
                 coinArray.push({
+                    id: result[rownumber].id,
                     count : result[rownumber].count,
                     price : result[rownumber].price
                 });
@@ -28,6 +29,7 @@ function handleGetRequest(req, res)
                     continue;
                 }
                 healthArray.push({
+                    id: result[rownumber].id,
                     count : result[rownumber].count,
                     price : result[rownumber].price
                 });
@@ -37,6 +39,7 @@ function handleGetRequest(req, res)
                     continue;
                 }
                 ticketArray.push({
+                    id: result[rownumber].id,
                     count : result[rownumber].count,
                     price : result[rownumber].price
                 });
@@ -44,11 +47,9 @@ function handleGetRequest(req, res)
         }
 
         const storeItem = {
-            items:{
-                coin : coinArray,
-                health : healthArray,
-                ticket : ticketArray
-            }
+            coin : coinArray,
+            health : healthArray,
+            ticket : ticketArray
         };
         responseGenerator(res, 200, storeItem);
     });
