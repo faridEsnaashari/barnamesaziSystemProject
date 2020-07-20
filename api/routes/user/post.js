@@ -13,16 +13,13 @@ function handlePostRequest(req, res)
         return;
     }
 
-    const query = "insert into user(username, phonenumber, name, teamcolor, health, ticket, score)" + 
+    const query = "insert into user(username, phonenumber, name, teamcolor)" + 
         ' value (?)';
     const data = [
         req.body.username,
         req.body.phonenumber,
         req.body.name,
-        req.body.teamColor,
-        0,
-        0,
-        0
+        req.body.teamColor
     ];
 
     sqlConnection.query(query, [data], function (err, result, fields) {
