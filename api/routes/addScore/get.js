@@ -46,7 +46,7 @@ function handleGetRequest(req, res)
 
                 let changeScoreQuery = ""; 
                 if(result[0] == undefined){
-                    changeScoreQuery = "insert into activegamescore value(" + userId + ", " + activeGameId + ", " + score + ")";
+                    changeScoreQuery = "insert into activegamescore(userId, gameId, score) value(" + userId + ", " + activeGameId + ", " + score + ")";
                 }
                 else{
                     changeScoreQuery = "update activegamescore set score = score +" + score + " where gameId = " + activeGameId + " and userId = " + userId;
