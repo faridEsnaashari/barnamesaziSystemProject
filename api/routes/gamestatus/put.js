@@ -14,50 +14,108 @@ function handlePutRequest(req, res)
     }
 
     const query = generateUpdateQuery(req);
+    let queryCounter = query.length - 1;
+    let queryExceptions = [];
 
-    sqlConnection.query(query, function (err, result, fields) {
-        if (err) throw err;
+    executeQuery(query, queryCounter, queryExceptions)
+        .then(function(data){
+            return callback(data)
+        })
+        .then(function(){
+            if(queryExceptions.length > 0){
+                responseJson = {
+                    "message" : "these/this game(s) not found",
+                    games : queryExceptions
+                }
+                responseGenerator(res, 409, responseJson);
+            }
+            else{
+                responseJson = {
+                    "message": "games updated"
+                };
+                responseGenerator(res, 200, responseJson);
+            }
+        })
+        .catch(function(error){
+            console.error(error);
+        });
+}
 
-        if(result.affectedRows === 0){
-            responseJson = {
-                "message" : "game not found"
-            };
-            responseGenerator(res, 404, responseJson);
-            return;
-        }
-        responseJson = {
-              "message": "game updated"
-        };
-        responseGenerator(res, 200, responseJson);
+function callback(data){
+    if(data.result.affectedRows === 0){
+        data.queryExceptions.push(getGameIdFromQuery(data.query[data.queryCounter]));
+    }
+    data.queryCounter--;
+    if(!(data.queryCounter === -1)){
+        return new Promise(function(resolve, reject){
+            executeQuery(data.query, data.queryCounter, data.queryExceptions)
+            .then(function(data){
+                return callback(data)
+            })
+            .then(function(data){
+                resolve(data)
+            })
+            .catch(function(error){
+                console.error(error);
+            });
+        })
+    }
+}
+
+function executeQuery(query, queryCounter, queryExceptions){
+    return new Promise(function(resolve, reject){
+        sqlConnection.query(query[queryCounter], function(err, result, fields){
+            if(err){
+                reject(err);
+            }
+            else{
+                data = {
+                    query : query,
+                    queryCounter : queryCounter,
+                    queryExceptions : queryExceptions,
+                    result : result
+                }
+                resolve(data);
+            }
+        });
     });
-
 }
 
 function generateUpdateQuery(req){
-    let query = "update gamestatus " +
-        "set ";
-    if(!(req.body.duration == undefined)){
-       query += "duration = " + "\'" + req.body.duration + "\'"; 
+    let query = [];
+    for(game in req.body.games){
+        eachGame = req.body.games[game];
+        subQuery = "update gamestatus set label = \'" + eachGame.label + "\', duration = " + eachGame.duration + " where id = " + eachGame.id;
+        query.push(subQuery);
     }
-
-
-    query += " where ";
-    if(!(req.body.label == undefined)){
-       query += "label = " + "\'" + req.body.label + "\'"; 
-    }
-
     return query;
+}
+
+function getGameIdFromQuery(query){
+    const equalPosition = query.lastIndexOf("=");
+    return query.slice(equalPosition + 2, query.length);
 }
 
 function checkParameters(req)
 {
-    if(req.body.label == undefined || req.body.label == null)
-    {
+    if(req.body.games == undefined || req.body.games == null){
         return false;
     }
-    if(req.body.duration == undefined || req.body.duration == null)
-    {
-        return false;
+    for(let game in req.body.games){
+        if(Object.keys(req.body.games[game]).length < 1){
+            return false;
+        }
+        else{
+            const eachGame = req.body.games[game];
+            if(
+                (eachGame.id == undefined || eachGame.id == null)||
+                (eachGame.label == undefined || eachGame.label == null)||
+                (eachGame.duration == undefined || eachGame.duration == null)
+            ){
+                return false;
+            }
+
+        }
     }
     return true;
 }
