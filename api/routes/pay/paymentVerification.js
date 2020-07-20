@@ -16,12 +16,13 @@ function handlePaymentVerificationRequest(req, res){
     const amount = req.query.amount;
     const userId = req.query.userid;
     const authority = req.query.Authority;
+    const itemId = req.query.itemid;
 
 
-    zarinpal.verify(res, userId, amount, authority, callback);
+    zarinpal.verify(itemId, res, userId, amount, authority, callback);
 }
 
-const callback = (res, refid, userId, amount) => {
+const callback = (res, refid, userId, amount, itemId) => {
     if(refid === "failed"){
         const responseJson = {
             message : 'payment process failed'
@@ -41,13 +42,24 @@ const callback = (res, refid, userId, amount) => {
     sqlConnection.query(query, [data], function (err, result, fields) {
         if (err) throw err;
 
-        const responseJson = {
-            RefID : refid,
-            message : 'payment accepted'
-        };
-        responseGenerator(res, 200, responseJson);
+        const query = "select * from store where id = " + itemId;
+        sqlConnection.query(query, [data], function (err, result, fields) {
+            if(err) throw err;
 
-        return;
+            const query = "update user set " + result[0].name + " = " + result[0].name + " + " + result[0].count + " where userId = " + userId;
+            sqlConnection.query(query, [data], function (err, result, fields) {
+                if(err) throw err;
+
+                const responseJson = {
+                    RefID : refid,
+                    message : 'payment accepted'
+                };
+                responseGenerator(res, 200, responseJson);
+
+                return;
+            });
+        });
+
     });
 }
 module.exports = handlePaymentVerificationRequest;
