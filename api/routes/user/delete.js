@@ -29,7 +29,7 @@ function handleDeleteRequest(req, res)
         return;
     }
 
-    const query = "delete from user where userId = '" + userId + "'";
+    const query = "delete from user where userId = " + userId;
 //    let query = null;
 //    if(req.body.phonenumber != undefined){
 //        query = "delete from user where phonenumber = '" + req.body.phonenumber + "'";
@@ -64,7 +64,7 @@ function checkParameters(req)
 //        return false;
 //    }
 //    return true;
-    if(req.body.usertoken == undefined){
+    if(req.body.usertoken == undefined || req.body.usertoken == null){
         return false;
     }
     return true;
