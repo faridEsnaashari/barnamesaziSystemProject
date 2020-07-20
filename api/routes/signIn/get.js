@@ -37,7 +37,7 @@ function handleGetRequest(req, res){
 }
 
 function checkParameters(req) {
-    if(req.query.phonenumber == undefined){
+    if(req.query.phonenumber == undefined || req.query.phonenumber == null){
         return false;
     }
     return true;
