@@ -13,11 +13,10 @@ function handlePostRequest(req, res)
         return;
     }
 
-    const query = "insert into gamestatus(label, startedtime, duration)" + 
+    const query = "insert into gamestatus(label, duration)" + 
         ' value (?)';
     const data = [
         req.body.label,
-        req.body.startedtime,
         req.body.duration
     ];
 
@@ -35,7 +34,6 @@ function handlePostRequest(req, res)
 function checkParameters(req)
 {
     if(req.body.label == undefined || req.body.label == null ||
-        req.body.startedtime == undefined || req.body.startedtime == null ||
         req.body.duration == undefined || req.body.duration == null
     )
     {
