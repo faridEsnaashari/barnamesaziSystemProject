@@ -14,25 +14,24 @@ function handleGetRequest(req, res)
     }
 
     const limit = req.query.limit;
-    const query = "SELECT * FROM user order by score limit " + limit  + ";"
+
+    let query = "";
+    if(req.query.activegame != undefined && req.query.activegame === "true"){
+        query = "select user.userId, user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.ticket, activegamescore.score, activegamescore.numberofticketused from user inner join activegamescore where user.userId=activegamescore.userId order by activegamescore.score desc, activegamescore.numberofticketused limit " + limit;
+    }
+    else{
+        query = "select * from user order by score desc, numberofticketused limit " + limit;
+    }
  
 
     sqlConnection.query(query, function (err, result, fields) {
         if (err) throw err;
 
-        if(result[0] == undefined)
-        {
-            const responseJson = {
-              "message": "user not found"
-            };
-            responseGenerator(res, 404, responseJson);
-            return;
-        }
-        const user = {}; 
+        const user = []; 
         
         for(const rowNumber in result)
         {
-            user['user' + rowNumber] = {
+            userDetail = {
                 username : result[rowNumber].username,
                 phonenumber : result[rowNumber].phonenumber,
                 name : result[rowNumber].name,
@@ -40,9 +39,14 @@ function handleGetRequest(req, res)
                 health : result[rowNumber].health,
                 ticket : result[rowNumber].ticket,
                 score : result[rowNumber].score
-            }            
+            };            
+
+            user.push(userDetail);
         }
-        responseGenerator(res, 200, user);
+        users = {
+            users: user
+        }
+        responseGenerator(res, 200, users);
     });
 
 }
