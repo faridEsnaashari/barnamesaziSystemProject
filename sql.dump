@@ -84,6 +84,11 @@ CREATE TABLE `activegamescore` (
   `numberofticketused` int default 1
 );
 
+CREATE TABLE `answeredquestion` (
+  `userId` int,
+  `questionId` int
+);
+
 
 
 DELIMITER //
