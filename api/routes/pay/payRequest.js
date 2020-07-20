@@ -1,6 +1,7 @@
 const responseGenerator = require('../../responseGenerator');
 const zarinpal = require('../../zarinpal');
 const token = require('../../token');
+const sqlConnection = require('../../sqlConnection');
 
 function handlePayRequest(req, res){
     if(!checkParameters(req)) {
@@ -11,8 +12,7 @@ function handlePayRequest(req, res){
 
         return;
     }
-    const amount = req.query.amount;
-
+    const itemId= req.query.itemid;
     const userToken = req.query.usertoken;
 
     let userId = null;
@@ -27,12 +27,36 @@ function handlePayRequest(req, res){
 
         return;
     }
+
+    const query = "select price from store where id=" + itemId; 
+
+    sqlConnection.query(query, function (err, result, fields) {
+        if(err){
+            throw err;
+        }
+        zarinpal.pay(res, result[0].price, userId, sendZarinpallURL, itemId);
+    });
     
-    zarinpal.pay(res, amount, userId);
 };
 
+function sendZarinpallURL(zarinpallResponse, res){
+    if (zarinpallResponse.status == 100) {
+        const responseJson = {
+            message : zarinpallResponse.url
+        };
+        responseGenerator(res, 200, responseJson);
+    }
+    else{
+        const responseJson = {
+            url : "zarinpall returns an error"
+        };
+        responseGenerator(res, 401, responseJson);
+        return;
+    }
+}
+
 function checkParameters(req){
-    if(req.query.amount == undefined && req.query.usertoken == undefined)
+    if(req.query.usertoken == undefined || req.query.itemid == undefined)
     {
         return false;
     }
