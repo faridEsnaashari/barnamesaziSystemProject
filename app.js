@@ -14,6 +14,7 @@ const payRoute = require('./api/routes/pay/pay');
 const signInRoute = require('./api/routes/signIn/signIn');
 const topScoresRoute = require('./api/routes/topScores/topScores');
 const teamsMembersNumberRoute = require('./api/routes/teamMembersNumber/teamMembersNumber');
+const addScoreRoute = require('./api/routes/addScore/addScore');
 
 
 app.use('/user', userRoute);
@@ -24,6 +25,7 @@ app.use('/pay', payRoute);
 app.use('/signin', signInRoute);
 app.use('/topscores', topScoresRoute);
 app.use('/teamsmembersnumber', teamsMembersNumberRoute);
+app.use('/addscore', addScoreRoute);
 
 
 app.use((req, res, next) => {
