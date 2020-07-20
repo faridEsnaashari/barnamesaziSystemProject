@@ -70,15 +70,18 @@ CREATE TABLE `user` (
   `phonenumber` varchar(11) unique,
   `name` varchar(50),
   `teamcolor` varchar(10),
-  `health` varchar(3),
-  `ticket` varchar(3),
-  `score` int 
+  `health` varchar(3) default '0',
+  `ticket` varchar(3) default '0',
+  `coin` int default 0,
+  `score` int default 0, 
+  `numberofticketused` int default 0
 );
 
 CREATE TABLE `activegamescore` (
   `userId` int,
   `gameId` int,
-  `score` int 
+  `score` int, 
+  `numberofticketused` int default 1
 );
 
 
