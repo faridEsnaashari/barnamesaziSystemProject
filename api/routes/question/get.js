@@ -1,20 +1,55 @@
 const responseGenerator = require('../../responseGenerator');
 const sqlConnection = require('../../sqlConnection');
+const token = require('../../token');
 
 function handleGetRequest(req, res)
 {
-    let query = [];
+    if(!checkParameters(req))
+    {
+        const responseJson = {
+            message : "bad parameter provided"
+        };
+        responseGenerator(res, 400, responseJson);
+
+        return;
+    }
+
+    let questionQuery = [];
     if(req.query.lownumber != undefined && req.query.highnumber != undefined){
         const limit = req.query.highnumber - req.query.lownumber;
-        query = "select * from question limit " + limit + " offset " + req.query.lownumber;
+        questionQuery = "select * from question limit " + limit + " offset " + req.query.lownumber;
         
     }
     else{
-         query = "select * from question order by rand() limit 1";
+        const userToken = req.query.usertoken;
+
+        var userId = null;
+        try{
+            userId = token.verify(userToken);
+        }
+        catch(err){
+            const responseJson = {
+                message : "user unauthorized"
+            };
+            responseGenerator(res, 401, responseJson);
+
+            return;
+        }
+
+        questionQuery = "select * from question inner join (select * from(select * from (select id from question union all select questionId from answeredquestion where userId = " + userId + ")as tbl group by id having count(*)=1)as tbl2  order by rand() limit 1)as tbl3 on tbl3.id = question.id";
     }
 
-    sqlConnection.query(query, function (err, result, fields) {
+    sqlConnection.query(questionQuery, function (err, result, fields) {
         if (err) throw err;
+
+        if(result[0] == undefined){
+            const responseJson = {
+                message : "there is no more question"
+            };
+            responseGenerator(res, 404, responseJson);
+
+            return;
+        }
 
         let questions = [];
         for(question in result){
@@ -29,12 +64,36 @@ function handleGetRequest(req, res)
             };
             questions.push(questionRow);
         }
-        const responseJson = {
-            questions : questions
-        };
-        responseGenerator(res, 200, responseJson);
+
+        if(req.query.usertoken != undefined){
+            answeredQuery = "insert into answeredquestion value(" + userId + ", " + result[0].id + ")";
+            sqlConnection.query(answeredQuery, function (err, result, fields) {
+                if(err) throw err;
+
+                const responseJson = {
+                    questions : questions
+                };
+                responseGenerator(res, 200, responseJson);
+            });
+        }
+        else{
+            const responseJson = {
+                questions : questions
+            };
+            responseGenerator(res, 200, responseJson);
+        }
     });
 
+}
+
+function checkParameters(req)
+{
+    if(req.query.usertoken == undefined || req.query.usertoken == null) {
+        if((req.query.lownumber == undefined || req.query.lownumber == null) && (req.query.highnumber == undefined || req.query.highnumber == null)){
+            return false;
+        }
+    }
+    return true;
 }
 
 module.exports = handleGetRequest;
