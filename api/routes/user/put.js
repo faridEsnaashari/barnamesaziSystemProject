@@ -40,10 +40,41 @@ function handlePutRequest(req, res)
             responseGenerator(res, 404, responseJson);
             return;
         }
-        responseJson = {
-              "message": "user updated"
-        };
-        responseGenerator(res, 200, responseJson);
+        if(req.body.ticket != undefined){
+            const getActiveGameQuery = "select id from gamestatus where active = true";
+            sqlConnection.query(getActiveGameQuery, function (err, result, fields) {
+                if(err) throw err;
+
+                activeGameId = result[0].id;
+                const checkTableQuery = "select * from activegamescore where gameId = " + activeGameId + " and userId = " + userId; 
+                sqlConnection.query(checkTableQuery, function (err, result, fields) {
+                    if(err) throw err;
+
+                    let changeScoreQuery = ""; 
+                    if(result[0] == undefined){
+                        changeScoreQuery = "insert into activegamescore value(" + userId + ", " + activeGameId + ", 0, 1)";
+                    }
+                    else{
+                        changeScoreQuery = "update activegamescore set numberofticketused = numberofticketused + 1 where gameId = " + activeGameId + " and userId = " + userId;
+                    }
+                    sqlConnection.query(changeScoreQuery, function (err, result, fields) {
+                        if(err) throw err;
+                        responseJson = {
+                            "message": "user updated"
+                        };
+                        responseGenerator(res, 200, responseJson);
+                        return;
+                    });
+                });
+            });
+        }
+        else{
+            responseJson = {
+                "message": "user updated"
+            };
+            responseGenerator(res, 200, responseJson);
+            return;
+        }
     });
 
 }
@@ -51,43 +82,35 @@ function handlePutRequest(req, res)
 function generateUpdateQuery(req, userId){
     let query = "update user " +
         "set ";
-    if(!(req.body.name == undefined)){
-       query += "name = " + "\'" + req.body.name + "\'"; 
+    for(const field in req.body){
+        if(field === "usertoken"){
+            continue;
+        }
+        else if(field === "ticket"){
+            query += field + " = " + field + " - 1"+ ", numberofticketused = numberofticketused + 1, " ;
+        }
+        else if(field === "health"){
+            query += field + " = " + field + " - 1"+ ", ";
+        }
+        else if(field === "coin"){
+            query += field + " = " + req.body[field] + ", ";
+        }
+        else{
+            query += field + " = " + "\'" + req.body[field] + "\'" + ", ";
+        }
     }
-    if(!(req.body.teamColor == undefined)){
-       query += ", teamcolor = " + "\'" + req.body.teamColor + "\'"; 
-    }
-    if(!(req.body.health == undefined)){
-       query += ", health = " + "\'" + req.body.health + "\'"; 
-    }
-    if(!(req.body.ticket == undefined)){
-       query += ", ticket = " + "\' " + req.body.ticket + "\'"; 
-    }
-    if(!(req.body.score == undefined)){
-       query += ", score = " + "\'" + req.body.score + "\'"; 
-    }
-
-
+    query = query.substring(0, query.length - 2);
     query += " where userId = " + userId;
-//    if(!(req.body.username == undefined)){
-//       query += "username = " + "\'" + req.body.username + "\'"; 
-//    }
-//    if(!(req.body.phonenumber == undefined)){
-//       query += "phonenumber = " + "\'" + req.body.phonenumber + "\'"; 
-//    }
-
     return query;
 }
 
 function checkParameters(req)
 {
-//    if((req.body.username == undefined || req.body.username == null) &&
-//        (req.body.phonenumber == undefined || req.body.phonenumber == null)
-//    )
-//    {
-//        return false;
-//    }
     if(req.body.usertoken == undefined || req.body.usertoken == null)
+    {
+        return false;
+    }
+    if(req.body.score != undefined)
     {
         return false;
     }
@@ -96,18 +119,18 @@ function checkParameters(req)
         (req.body.teamColor == undefined || req.body.teamColor == null) &&
         (req.body.health == undefined || req.body.health == null) &&
         (req.body.ticket == undefined || req.body.ticket == null) &&
-        (req.body.score == undefined || req.body.score == null)
+        (req.body.coin == undefined || req.body.coin == null) 
     )
     {
         return false;
     }
     if(!(req.body.health == undefined || req.body.health == null))
-       if(!(req.body.health === "decrease" || req.body.health === "current")) &&
+       if(!(req.body.health === "decrease"))
     {
         return false;
     }
     if(!(req.body.ticket == undefined || req.body.ticket == null))
-        (!(req.body.ticket  === "decrease" || req.body.ticket === "current"))
+        if(!(req.body.ticket  === "decrease"))
     {
         return false;
     }
