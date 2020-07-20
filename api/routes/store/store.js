@@ -4,6 +4,7 @@ const router = express.Router();
 
 const handleGetRequest = require('./get');
 const handlePutRequest = require('./put');
+const handlePostRequest = require('./post');
 
 router.get('/', (req, res, next) => {
     handleGetRequest(req, res);
@@ -11,6 +12,10 @@ router.get('/', (req, res, next) => {
 
 router.put('/', (req, res, next) => {
     handlePutRequest(req, res);
+});
+
+router.post('/', (req, res, next) => {
+    handlePostRequest(req, res);
 });
 
 
