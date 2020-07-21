@@ -1,4 +1,4 @@
-function generateResponse(res, statusCode, responseJson)
+function sendJson(res, statusCode, responseJson)
 {
     res.status(statusCode);
     res.json(responseJson);
@@ -7,4 +7,17 @@ function generateResponse(res, statusCode, responseJson)
 }
 
 
-module.exports = generateResponse;
+function sendHtmlPage(res, path, parameters)
+{
+    res.render(path, parameters);
+
+    return res;
+}
+
+const exportObj = {
+    sendJson : sendJson,
+    sendHtmlPage : sendHtmlPage
+};
+
+
+module.exports = exportObj;
