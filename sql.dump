@@ -79,7 +79,6 @@ CREATE TABLE `user` (
 
 CREATE TABLE `activegamescore` (
   `userId` int,
-  `gameId` int,
   `score` int, 
   `numberofticketused` int default 1
 );
