@@ -41,21 +41,16 @@ function handlePutRequest(req, res)
             return;
         }
         if(req.body.ticket != undefined){
-            const getActiveGameQuery = "select id from gamestatus where active = true";
-            sqlConnection.query(getActiveGameQuery, function (err, result, fields) {
-                if(err) throw err;
-
-                activeGameId = result[0].id;
-                const checkTableQuery = "select * from activegamescore where gameId = " + activeGameId + " and userId = " + userId; 
+                const checkTableQuery = "select * from activegamescore where userId = " + userId; 
                 sqlConnection.query(checkTableQuery, function (err, result, fields) {
                     if(err) throw err;
 
                     let changeScoreQuery = ""; 
                     if(result[0] == undefined){
-                        changeScoreQuery = "insert into activegamescore value(" + userId + ", " + activeGameId + ", 0, 1)";
+                        changeScoreQuery = "insert into activegamescore value(" + userId + ", 0, 1)";
                     }
                     else{
-                        changeScoreQuery = "update activegamescore set numberofticketused = numberofticketused + 1 where gameId = " + activeGameId + " and userId = " + userId;
+                        changeScoreQuery = "update activegamescore set numberofticketused = numberofticketused + 1 where userId = " + userId;
                     }
                     sqlConnection.query(changeScoreQuery, function (err, result, fields) {
                         if(err) throw err;
@@ -66,7 +61,6 @@ function handlePutRequest(req, res)
                         return;
                     });
                 });
-            });
         }
         else{
             responseJson = {

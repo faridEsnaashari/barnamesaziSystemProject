@@ -31,35 +31,29 @@ function handleGetRequest(req, res)
     }
 
     const updateUserScoreQuery = "update user set score = score + " + score + " where userId = " + userId;
- 
+
     sqlConnection.query(updateUserScoreQuery, function (err, result, fields) {
         if (err) throw err;
 
-        const getActiveGameQuery = "select id from gamestatus where active = true";
-        sqlConnection.query(getActiveGameQuery, function (err, result, fields) {
+        const checkTableQuery = "select * from activegamescore where userId = " + userId; 
+        sqlConnection.query(checkTableQuery, function (err, result, fields) {
             if(err) throw err;
 
-            activeGameId = result[0].id;
-            const checkTableQuery = "select * from activegamescore where gameId = " + activeGameId + " and userId = " + userId; 
-            sqlConnection.query(checkTableQuery, function (err, result, fields) {
+            let changeScoreQuery = ""; 
+            if(result[0] == undefined){
+                changeScoreQuery = "insert into activegamescore(userId, score) value(" + userId + ", " + score + ")";
+            }
+            else{
+                changeScoreQuery = "update activegamescore set score = score +" + score + " where userId = " + userId;
+            }
+            sqlConnection.query(changeScoreQuery, function (err, result, fields) {
                 if(err) throw err;
+                const responseJson = {
+                    message : "user score updated"
+                };
+                responseGenerator.sendJson(res, 200, responseJson);
 
-                let changeScoreQuery = ""; 
-                if(result[0] == undefined){
-                    changeScoreQuery = "insert into activegamescore(userId, gameId, score) value(" + userId + ", " + activeGameId + ", " + score + ")";
-                }
-                else{
-                    changeScoreQuery = "update activegamescore set score = score +" + score + " where gameId = " + activeGameId + " and userId = " + userId;
-                }
-                sqlConnection.query(changeScoreQuery, function (err, result, fields) {
-                    if(err) throw err;
-                    const responseJson = {
-                        message : "user score updated"
-                    };
-                    responseGenerator.sendJson(res, 200, responseJson);
-
-                    return;
-                });
+                return;
             });
         });
     });
