@@ -29,7 +29,7 @@ function handleGetRequest(req, res)
         return;
     }
 
-    const query = "select user.userId, user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.coin, user.score, user.numberofticketused as countofplayinggame, activegamescore.numberofticketused as countofplayingcurrentgame from user inner join activegamescore on activegamescore.userId = user.userId where user.userId = " + userId;
+    const query = "select user.userId, user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.ticket, user.coin, user.score, user.numberofticketused as countofplayinggame, activegamescore.numberofticketused as countofplayingcurrentgame from user left join activegamescore on activegamescore.userId = user.userId where user.userId = " + userId;
  
 //    let query = null;
 //    if(req.query.phonenumber != undefined){
@@ -62,8 +62,8 @@ function handleGetRequest(req, res)
                 score : result[0].score
             },
             countOfplayingGame : {
-                total : result[0].countofplayinggame,
-                activeGame : result[0].countofplayingcurrentgame
+                total : result[0].countofplayinggame || 0,
+                activeGame : result[0].countofplayingcurrentgame || 0
             }
 
         };
