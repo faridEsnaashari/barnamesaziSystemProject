@@ -29,7 +29,7 @@ function handleGetRequest(req, res)
         return;
     }
 
-    const query = "SELECT * FROM user where userId = '" + userId + "'";
+    const query = "select user.userId, user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.coin, user.score, user.numberofticketused as countofplayinggame, activegamescore.numberofticketused as countofplayingcurrentgame from user inner join activegamescore on activegamescore.userId = user.userId where user.userId = " + userId;
  
 //    let query = null;
 //    if(req.query.phonenumber != undefined){
@@ -60,7 +60,12 @@ function handleGetRequest(req, res)
                 ticket : result[0].ticket,
                 coin : result[0].coin,
                 score : result[0].score
+            },
+            countOfplayingGame : {
+                total : result[0].countofplayinggame,
+                activeGame : result[0].countofplayingcurrentgame
             }
+
         };
         
         const teamMembersQuery = "select count(teamColor) as number, teamcolor from user group by teamcolor";
