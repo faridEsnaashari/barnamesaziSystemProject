@@ -17,10 +17,10 @@ function handleGetRequest(req, res)
 
     let query = "";
     if(req.query.activegame != undefined && req.query.activegame === "true"){
-        query = "select user.userId, user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.ticket, activegamescore.score, activegamescore.numberofticketused from user inner join activegamescore where user.userId=activegamescore.userId order by activegamescore.score desc, activegamescore.numberofticketused limit " + limit;
+        query = "select user.userId, user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.ticket, activegamescore.score, activegamescore.numberofticketused as activegame, user.numberofticketused as total from user left join activegamescore on user.userId = activegamescore.userId order by activegamescore.score desc, activegamescore.numberofticketused limit " + limit;
     }
     else{
-        query = "select * from user order by score desc, numberofticketused limit " + limit;
+        query = "select user.username, user.phonenumber, user.name, user.teamcolor, user.health, user.ticket, user.coin, user.score, user.numberofticketused as total, activegamescore.numberofticketused as activegame from user left join activegamescore on user.userId = activegamescore.userId order by user.score desc, user.numberofticketused limit " + limit;
     }
  
 
@@ -32,13 +32,20 @@ function handleGetRequest(req, res)
         for(const rowNumber in result)
         {
             userDetail = {
-                username : result[rowNumber].username,
-                phonenumber : result[rowNumber].phonenumber,
-                name : result[rowNumber].name,
-                teamColor : result[rowNumber].teamcolor,
-                health : result[rowNumber].health,
-                ticket : result[rowNumber].ticket,
-                score : result[rowNumber].score
+                user : {
+                    username : result[rowNumber].username,
+                    phonenumber : result[rowNumber].phonenumber,
+                    name : result[rowNumber].name,
+                    teamColor : result[rowNumber].teamcolor,
+                    health : result[rowNumber].health,
+                    ticket : result[rowNumber].ticket,
+                    score : result[rowNumber].score
+                },
+                countOfplayingGame : {
+                    total : result[rowNumber].total || 0,
+                    activeGame : result[rowNumber].activegame || 0
+                }
+
             };            
 
             user.push(userDetail);
