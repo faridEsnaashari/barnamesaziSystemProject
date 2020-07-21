@@ -108,6 +108,7 @@ BEGIN
     startedtime = inputStartedtime
     where id = inputId+1;
     delete from answeredquestion;
+    delete from activegamescore;
 END //
 
 DELIMITER ;
