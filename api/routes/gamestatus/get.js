@@ -62,7 +62,7 @@ function prepareResponse(req, res){
 //            const responseJson = {
 //              "message": "game not found"
 //            };
-//            responseGenerator(res, 404, responseJson);
+//            responseGenerator.sendJson(res, 404, responseJson);
 //            return;
 //        }
         
@@ -79,7 +79,7 @@ function prepareResponse(req, res){
         const response = {
             games : games
         };
-        responseGenerator(res, 200, response);
+        responseGenerator.sendJson(res, 200, response);
         return;
     });
 

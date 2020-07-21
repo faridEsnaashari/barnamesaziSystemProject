@@ -8,7 +8,7 @@ function handleDeleteRequest(req, res)
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -27,13 +27,13 @@ function handleDeleteRequest(req, res)
                     "message" : "these/this question(s) not found",
                     questions : queryExceptions
                 }
-                responseGenerator(res, 409, responseJson);
+                responseGenerator.sendJson(res, 409, responseJson);
             }
             else{
                 responseJson = {
                     "message": "questions deleted"
                 };
-                responseGenerator(res, 200, responseJson);
+                responseGenerator.sendJson(res, 200, responseJson);
             }
         })
         .catch(function(error){

@@ -12,7 +12,7 @@ function handleGetRequest(req, res)
         responseObject[result[0].teamcolor] = result[0]['number'];
         responseObject[result[1].teamcolor] = result[1]['number'];
 
-        responseGenerator(res, 200, responseObject);
+        responseGenerator.sendJson(res, 200, responseObject);
     });
 
 }

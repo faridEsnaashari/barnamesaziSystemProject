@@ -8,7 +8,7 @@ function handleGetRequest(req, res)
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -46,7 +46,7 @@ function handleGetRequest(req, res)
         users = {
             users: user
         }
-        responseGenerator(res, 200, users);
+        responseGenerator.sendJson(res, 200, users);
     });
 
 }

@@ -51,7 +51,7 @@ function handleGetRequest(req, res)
             health : healthArray,
             ticket : ticketArray
         };
-        responseGenerator(res, 200, storeItem);
+        responseGenerator.sendJson(res, 200, storeItem);
     });
 
 }

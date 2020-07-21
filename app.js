@@ -32,7 +32,7 @@ app.use((req, res, next) => {
     const responseJson = {
         message : "wrong route or method"
     };
-    responseGenerator(res, 404, responseJson);
+    responseGenerator.sendJson(res, 404, responseJson);
 });
 
 module.exports = app;

@@ -8,7 +8,7 @@ function handlePostRequest(req, res)
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -21,7 +21,7 @@ function handlePostRequest(req, res)
             const responseJson = {
                 message : "item existed"
             };
-            responseGenerator(res, 409, responseJson);
+            responseGenerator.sendJson(res, 409, responseJson);
 
             return;
         }
@@ -29,7 +29,7 @@ function handlePostRequest(req, res)
         responseJson = {
               "message": "item(s) created"
         };
-        responseGenerator(res, 201, responseJson);
+        responseGenerator.sendJson(res, 201, responseJson);
     });
 
 }

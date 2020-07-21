@@ -9,7 +9,7 @@ function handleGetRequest(req, res){
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -25,14 +25,14 @@ function handleGetRequest(req, res){
             const responseJson = {
               "message": "user not found"
             };
-            responseGenerator(res, 404, responseJson);
+            responseGenerator.sendJson(res, 404, responseJson);
             return;
         }
         const userId = result[0].userId; 
         const userToken = {
             token : token.create(userId)
         };
-        responseGenerator(res, 200, userToken);
+        responseGenerator.sendJson(res, 200, userToken);
     });
 }
 

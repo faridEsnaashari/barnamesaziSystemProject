@@ -7,7 +7,7 @@ function handlePutRequest(req, res){
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -26,13 +26,13 @@ function handlePutRequest(req, res){
                     "message" : "these/this item(s) not found",
                     items : queryExceptions
                 }
-                responseGenerator(res, 409, responseJson);
+                responseGenerator.sendJson(res, 409, responseJson);
             }
             else{
                 responseJson = {
                     "message": "item updated"
                 };
-                responseGenerator(res, 200, responseJson);
+                responseGenerator.sendJson(res, 200, responseJson);
             }
         })
         .catch(function(error){

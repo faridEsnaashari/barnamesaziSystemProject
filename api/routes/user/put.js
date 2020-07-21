@@ -9,7 +9,7 @@ function handlePutRequest(req, res)
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -23,7 +23,7 @@ function handlePutRequest(req, res)
         const responseJson = {
             message : "user unauthorized"
         };
-        responseGenerator(res, 401, responseJson);
+        responseGenerator.sendJson(res, 401, responseJson);
 
         return;
     }
@@ -37,7 +37,7 @@ function handlePutRequest(req, res)
             responseJson = {
                 "message" : "user not found"
             };
-            responseGenerator(res, 404, responseJson);
+            responseGenerator.sendJson(res, 404, responseJson);
             return;
         }
         if(req.body.ticket != undefined){
@@ -62,7 +62,7 @@ function handlePutRequest(req, res)
                         responseJson = {
                             "message": "user updated"
                         };
-                        responseGenerator(res, 200, responseJson);
+                        responseGenerator.sendJson(res, 200, responseJson);
                         return;
                     });
                 });
@@ -72,7 +72,7 @@ function handlePutRequest(req, res)
             responseJson = {
                 "message": "user updated"
             };
-            responseGenerator(res, 200, responseJson);
+            responseGenerator.sendJson(res, 200, responseJson);
             return;
         }
     });

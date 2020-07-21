@@ -9,7 +9,7 @@ function handlePaymentVerificationRequest(req, res){
         const responseJson = {
             message : 'payment process failed'
         };
-        responseGenerator(res, 406, responseJson);
+        responseGenerator.sendJson(res, 406, responseJson);
         return;
     }
 
@@ -27,7 +27,7 @@ const callback = (res, refid, userId, amount, itemId) => {
         const responseJson = {
             message : 'payment process failed'
         };
-        responseGenerator(res, 406, responseJson);
+        responseGenerator.sendJson(res, 406, responseJson);
         return;
     }
 
@@ -54,7 +54,7 @@ const callback = (res, refid, userId, amount, itemId) => {
                     RefID : refid,
                     message : 'payment accepted'
                 };
-                responseGenerator(res, 200, responseJson);
+                responseGenerator.sendJson(res, 200, responseJson);
 
                 return;
             });

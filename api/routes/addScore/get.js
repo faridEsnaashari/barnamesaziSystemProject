@@ -9,7 +9,7 @@ function handleGetRequest(req, res)
         const responseJson = {
             message : "bad parameter provided"
         };
-        responseGenerator(res, 400, responseJson);
+        responseGenerator.sendJson(res, 400, responseJson);
 
         return;
     }
@@ -25,7 +25,7 @@ function handleGetRequest(req, res)
         const responseJson = {
             message : "user unauthorized"
         };
-        responseGenerator(res, 401, responseJson);
+        responseGenerator.sendJson(res, 401, responseJson);
 
         return;
     }
@@ -56,7 +56,7 @@ function handleGetRequest(req, res)
                     const responseJson = {
                         message : "user score updated"
                     };
-                    responseGenerator(res, 200, responseJson);
+                    responseGenerator.sendJson(res, 200, responseJson);
 
                     return;
                 });
