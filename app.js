@@ -1,8 +1,17 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const responseGenerator = require('./api/responseGenerator');
+const hbs = require("express-handlebars");
 
 const app = express();
+
+app.engine("hbs", hbs({
+    extname : "hbs",
+    defaultLayout : "layout",
+    layoutsDir : __dirname + "/views/layouts"
+}));
+app.set("views", __dirname + "/views");
+app.set("view engine", "hbs");
 
 app.use(bodyParser.json())
 
@@ -28,6 +37,12 @@ app.use('/teamsmembersnumber', teamsMembersNumberRoute);
 app.use('/addscore', addScoreRoute);
 
 
+app.use(function (req, res, next){
+    const param = {
+        title : "kahr"
+    };
+    responseGenerator.sendHtmlPage(res, "index", param);
+});
 app.use((req, res, next) => {
     const responseJson = {
         message : "wrong route or method"
