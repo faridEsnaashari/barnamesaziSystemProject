@@ -5,6 +5,8 @@ const hbs = require("express-handlebars");
 
 const app = express();
 
+
+
 app.engine("hbs", hbs({
     extname : "hbs",
     defaultLayout : "layout",
@@ -12,6 +14,8 @@ app.engine("hbs", hbs({
 }));
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
+
+
 
 app.use(bodyParser.json())
 
@@ -24,6 +28,7 @@ const signInRoute = require('./api/routes/signIn/signIn');
 const topScoresRoute = require('./api/routes/topScores/topScores');
 const teamsMembersNumberRoute = require('./api/routes/teamMembersNumber/teamMembersNumber');
 const addScoreRoute = require('./api/routes/addScore/addScore');
+const adminRoute = require('./api/routes/admin/admin');
 
 
 app.use('/user', userRoute);
@@ -35,14 +40,9 @@ app.use('/signin', signInRoute);
 app.use('/topscores', topScoresRoute);
 app.use('/teamsmembersnumber', teamsMembersNumberRoute);
 app.use('/addscore', addScoreRoute);
+app.use('/admin', adminRoute);
 
 
-app.use(function (req, res, next){
-    const param = {
-        title : "kahr"
-    };
-    responseGenerator.sendHtmlPage(res, "index", param);
-});
 app.use((req, res, next) => {
     const responseJson = {
         message : "wrong route or method"
