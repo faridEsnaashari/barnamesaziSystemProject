@@ -15,6 +15,7 @@ app.engine("hbs", hbs({
 }));
 app.set("views", __dirname + "/views");
 app.set("view engine", "hbs");
+app.use('/views', express.static(__dirname + '/views'));
 
 
 
