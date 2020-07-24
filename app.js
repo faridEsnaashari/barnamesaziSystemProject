@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const responseGenerator = require('./api/responseGenerator');
 const hbs = require("express-handlebars");
+const session = require("express-session");
 
 const app = express();
 
@@ -18,6 +19,18 @@ app.set("view engine", "hbs");
 
 
 app.use(bodyParser.json())
+
+
+app.use(session({
+    secret : "secret for project1234",
+    name : "sessionid",
+    resave : false,
+    saveUninitialized : false,
+}));
+
+app.get("/", function(req, res, next){
+    req.session.token = 1;
+})
 
 const userRoute = require('./api/routes/user/user');
 const gamestatusRoute = require('./api/routes/gamestatus/gamestatus');
