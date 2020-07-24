@@ -88,6 +88,13 @@ CREATE TABLE `answeredquestion` (
   `questionId` int
 );
 
+CREATE TABLE `admin` (
+  `adminId` int not null primary key AUTO_INCREMENT,
+  `username` varchar(50) unique,
+  `password` varchar(50),
+  `name` varchar(50) default "admin"
+);
+
 
 
 DELIMITER //
