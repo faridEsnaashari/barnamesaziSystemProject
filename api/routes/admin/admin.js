@@ -8,6 +8,7 @@ const handleLogout = require('./logout');
 
 const handleDashboard = require('./dashboard/dashboard');
 const handleGetUser = require('./dashboard/user/userGet');
+const handlePutUser = require('./dashboard/user/userPut');
 
 router.get('/', (req, res, next) => {
     handleRoot(req, res);
@@ -31,6 +32,10 @@ router.get('/dashboard', (req, res, next) => {
 
 router.get('/dashboard/user', (req, res, next) => {
     handleGetUser(req, res);
+});
+
+router.put('/dashboard/user', (req, res, next) => {
+    handlePutUser(req, res);
 });
 
 module.exports = router;
