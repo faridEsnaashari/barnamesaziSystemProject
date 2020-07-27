@@ -74,7 +74,8 @@ CREATE TABLE `user` (
   `ticket` varchar(3) default '0',
   `coin` int default 0,
   `score` int default 0, 
-  `numberofticketused` int default 0
+  `numberofticketused` int default 0,
+  `active` boolean default 1 
 );
 
 CREATE TABLE `activegamescore` (
