@@ -9,6 +9,7 @@ const handleLogout = require('./logout');
 const handleDashboard = require('./dashboard/dashboard');
 const handleGetUser = require('./dashboard/user/userGet');
 const handlePutUser = require('./dashboard/user/userPut');
+const handleDeleteUser = require('./dashboard/user/userDelete');
 
 router.get('/', (req, res, next) => {
     handleRoot(req, res);
@@ -36,6 +37,10 @@ router.get('/dashboard/user', (req, res, next) => {
 
 router.put('/dashboard/user', (req, res, next) => {
     handlePutUser(req, res);
+});
+
+router.delete('/dashboard/user', (req, res, next) => {
+    handleDeleteUser(req, res);
 });
 
 module.exports = router;
