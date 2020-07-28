@@ -12,3 +12,12 @@ table {
 th, td {
       padding: 10px;
 }
+
+.formDiv {
+    display: inline-block;
+    margin: 0px 100px 0px 100px;
+}
+
+#updateFrom {
+    float: right;
+}
