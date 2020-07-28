@@ -153,20 +153,20 @@ function enableUpdateForm(){
     const updateFormDiv = document.getElementById("updateForm");
     const updateForm = updateFormDiv.children[0];
 
-    updateForm.children[1].disabled = false;
-    updateForm.children[5].disabled = false;
-    updateForm.children[9].disabled = false;
-    updateForm.children[12].disabled = false;
+    for(element in updateForm.children){
+        updateForm[element].disabled = false;
+        console.log(updateForm[element]);
+    }
 }
 
 function disableUpdateForm(){
     const updateFormDiv = document.getElementById("updateForm");
     const updateForm = updateFormDiv.children[0];
 
-    updateForm.children[1].disabled = true;
-    updateForm.children[5].disabled = true;
-    updateForm.children[9].disabled = true;
-    updateForm.children[12].disabled = true;
+    for(element in updateForm.children){
+        updateForm[element].disabled = true;
+        console.log(updateForm[element]);
+    }
 }
 
 
