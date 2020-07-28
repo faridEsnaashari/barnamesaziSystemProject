@@ -7,9 +7,11 @@ const handleGetLogin = require('./getLogin');
 const handleLogout = require('./logout');
 
 const handleDashboard = require('./dashboard/dashboard');
+//user
 const handleGetUser = require('./dashboard/user/userGet');
 const handlePutUser = require('./dashboard/user/userPut');
 const handleDeleteUser = require('./dashboard/user/userDelete');
+//store
 const handleGetStore = require('./dashboard/store/storeGet');
 
 router.get('/', (req, res, next) => {
