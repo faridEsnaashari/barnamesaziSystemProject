@@ -10,6 +10,7 @@ const handleDashboard = require('./dashboard/dashboard');
 const handleGetUser = require('./dashboard/user/userGet');
 const handlePutUser = require('./dashboard/user/userPut');
 const handleDeleteUser = require('./dashboard/user/userDelete');
+const handleGetStore = require('./dashboard/store/storeGet');
 
 router.get('/', (req, res, next) => {
     handleRoot(req, res);
@@ -41,6 +42,10 @@ router.put('/dashboard/user', (req, res, next) => {
 
 router.delete('/dashboard/user', (req, res, next) => {
     handleDeleteUser(req, res);
+});
+
+router.get('/dashboard/store', (req, res, next) => {
+    handleGetStore(req, res);
 });
 
 module.exports = router;
