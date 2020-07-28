@@ -20,6 +20,7 @@ const handlePostStore = require('./dashboard/store/storePost');
 const handleGetQuestion = require('./dashboard/question/questionGet');
 const handlePutQuestion = require('./dashboard/question/questionPut');
 const handleDeleteQuestion = require('./dashboard/question/questionDelete');
+const handlePostQuestion = require('./dashboard/question/questionPost');
 
 router.get('/', (req, res, next) => {
     handleRoot(req, res);
@@ -79,6 +80,10 @@ router.put('/dashboard/question', (req, res, next) => {
 
 router.delete('/dashboard/question', (req, res, next) => {
     handleDeleteQuestion(req, res);
+});
+
+router.post('/dashboard/question', (req, res, next) => {
+    handlePostQuestion(req, res);
 });
 
 module.exports = router;
