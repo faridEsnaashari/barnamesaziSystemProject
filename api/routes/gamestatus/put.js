@@ -27,13 +27,21 @@ function handlePutRequest(req, res)
                     "message" : "these/this game(s) not found",
                     games : queryExceptions
                 }
+<<<<<<< HEAD
                 responseGenerator.sendJson(res, 409, responseJson);
+=======
+                responseGenerator(res, 409, responseJson);
+>>>>>>> dbc9b9f6a573b95d64ff3980aacab7f29adf5074
             }
             else{
                 responseJson = {
                     "message": "games updated"
                 };
+<<<<<<< HEAD
                 responseGenerator.sendJson(res, 200, responseJson);
+=======
+                responseGenerator(res, 200, responseJson);
+>>>>>>> dbc9b9f6a573b95d64ff3980aacab7f29adf5074
             }
         })
         .catch(function(error){
