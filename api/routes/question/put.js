@@ -33,7 +33,6 @@ function handlePutRequest(req, res)
                 responseJson = {
                     "message": "questions updated"
                 };
-                responseGenerator.sendJson(res, 200, responseJson);
             }
         })
         .catch(function(error){
