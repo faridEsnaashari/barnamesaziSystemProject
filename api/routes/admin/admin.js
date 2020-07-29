@@ -25,6 +25,7 @@ const handlePostQuestion = require('./dashboard/question/questionPost');
 const handleGetGamestatus = require('./dashboard/gamestatus/gamestatusGet');
 const handlePostGamestatus = require('./dashboard/gamestatus/gamestatusPost');
 const handlePutGamestatus = require('./dashboard/gamestatus/gamestatusPut');
+const handleDeleteGamestatus = require('./dashboard/gamestatus/gamestatusDelete');
 
 router.get('/', (req, res, next) => {
     handleRoot(req, res);
@@ -100,6 +101,10 @@ router.post('/dashboard/gamestatus', (req, res, next) => {
 
 router.put('/dashboard/gamestatus', (req, res, next) => {
     handlePutGamestatus(req, res);
+});
+
+router.delete('/dashboard/gamestatus', (req, res, next) => {
+    handleDeleteGamestatus(req, res);
 });
 
 module.exports = router;
