@@ -13,6 +13,8 @@ CREATE TABLE `gamestatus` (
   `active` boolean default false,
   PRIMARY KEY (`id`)
 );
+INSERT INTO `gamestatus` (`label`, `duration`, `startedtime`, `active`) Value('game1', 24, '2019-07-16T08:50:53.167Z', 1);
+INSERT INTO `gamestatus` (`label`, `duration`) Value('game2', 24), ('game3', 72);
 
 
 --
@@ -32,12 +34,12 @@ CREATE TABLE `transactions` (
 
 CREATE TABLE `question` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `question` varchar(300),
-  `answer1` varchar(100) ,
-  `answer2` varchar(100) ,
-  `answer3` varchar(100) ,
-  `answer4` varchar(100) ,
-  `currect` tinyint,
+  `question` varchar(300) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `answer1` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `answer2` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `answer3` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `answer4` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `currect` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 
