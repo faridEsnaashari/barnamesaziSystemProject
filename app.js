@@ -29,10 +29,6 @@ app.use(session({
     saveUninitialized : false,
 }));
 
-app.get("/", function(req, res, next){
-    req.session.token = 1;
-})
-
 const userRoute = require('./api/routes/user/user');
 const gamestatusRoute = require('./api/routes/gamestatus/gamestatus');
 const questionRoute = require('./api/routes/question/question');
