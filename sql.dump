@@ -1,0 +1,123 @@
+create database barnamesaziSystemProject;
+use barnamesaziSystemProject;
+
+--
+-- Table structure for table `gamestatus`
+--
+
+CREATE TABLE `gamestatus` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `label` varchar(50),
+  `duration` int,
+  `startedtime` char(24) default null,
+  `active` boolean default false,
+  PRIMARY KEY (`id`)
+);
+
+
+--
+-- Table structure for table `transactions`
+--
+
+CREATE TABLE `transactions` (
+  `userid` int,
+  `refid` int,
+  `amount` int
+);
+
+
+--
+-- Table structure for table `question`
+--
+
+CREATE TABLE `question` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `question` varchar(300),
+  `answer1` varchar(100) ,
+  `answer2` varchar(100) ,
+  `answer3` varchar(100) ,
+  `answer4` varchar(100) ,
+  `currect` tinyint,
+  PRIMARY KEY (`id`)
+);
+
+--
+-- Table structure for table `store`
+--
+
+CREATE TABLE `store` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` char(30),
+  `count` int,
+  `price` int,
+  PRIMARY KEY (`id`),
+  CONSTRAINT unique_name_and_count UNIQUE (name, count)
+);
+
+--
+-- Dumping data for table `store`
+--
+
+INSERT INTO `store` VALUES ('coin',0,0),('heath',0,0),('ticket',0,0);
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `userId` int not null primary key AUTO_INCREMENT,
+  `username` varchar(50) unique,
+  `phonenumber` varchar(11) unique,
+  `name` varchar(50),
+  `teamcolor` varchar(10),
+  `health` varchar(3) default '0',
+  `ticket` varchar(3) default '0',
+  `coin` int default 0,
+  `score` int default 0, 
+  `numberofticketused` int default 0,
+  `active` boolean default 1 
+);
+
+CREATE TABLE `activegamescore` (
+  `userId` int,
+  `score` int, 
+  `numberofticketused` int default 1
+);
+
+CREATE TABLE `answeredquestion` (
+  `userId` int,
+  `questionId` int
+);
+
+CREATE TABLE `admin` (
+  `adminId` int not null primary key AUTO_INCREMENT,
+  `username` varchar(50) unique,
+  `password` varchar(50),
+  `name` varchar(50) default "admin"
+);
+
+
+
+DELIMITER //
+
+CREATE PROCEDURE activeNextGame(
+    IN  inputId int,
+    IN  inputStartedtime char(24)
+    
+)
+BEGIN
+    update gamestatus
+    set active = false
+    where id = inputId;
+
+    update gamestatus
+    set
+    active = true,
+    startedtime = inputStartedtime
+    where id = inputId+1;
+    delete from answeredquestion;
+    delete from activegamescore;
+END //
+
+DELIMITER ;
+

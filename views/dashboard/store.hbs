@@ -1,0 +1,66 @@
+<table>
+    <tr>
+        <th></th>
+        <th>name</th>
+        <th>count</th>
+        <th>price</th>
+    </tr>
+</table>
+<br>
+<br>
+
+<button type="button" onclick="getNextItems()">next</button>
+<button type="button" onclick="getPreviousItems()">previous</button>
+<br>
+<br>
+<br>
+<br>
+<button type="button" onclick="deleteItem()">DELETE</button>
+
+<br>
+<br>
+<p id="operationsStatus"></p>
+<br>
+<br>
+<br>
+<br>
+<div class="formDiv" id="insertForm">
+    <form onsubmit="insertItem(event)">
+        <label for="name">Item Name: </label>
+        <input type="text" name="name" id="name" value="">
+        <br>
+        <br>
+
+        <label for="count">Count: </label>
+        <input type="text" name="count" id="count" value="">
+        <br>
+        <br>
+
+        <label for="price">Price: </label>
+        <input type="text" name="price" id="price" value="">
+        <br>
+        <br>
+
+        <input type="submit" value="INSERT ITEM">
+    </form>
+</div>
+<div class="formDiv" id="updateForm">
+    <form onsubmit="updateItem(event)">
+        <label for="name">Item Name: </label>
+        <input type="text" name="name" id="name" value="" disabled> 
+        <br>
+        <br>
+
+        <label for="count">Count: </label>
+        <input type="text" name="count" id="count" value="" disabled>
+        <br>
+        <br>
+
+        <label for="price">Price: </label>
+        <input type="text" name="price" id="price" value="" disabled>
+        <br>
+        <br>
+
+        <input type="submit" value="UPDATE ITEM" disabled>
+    </form>
+</div>
