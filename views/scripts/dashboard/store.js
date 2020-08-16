@@ -194,20 +194,24 @@ function deleteItem(){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "items deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("item not found");
             operationsStatusParagraph.innerHTML = "items deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "items deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
     };
 
@@ -232,15 +236,18 @@ function updateItem(event){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "item updated successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "item updated successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
     };
 
@@ -271,25 +278,35 @@ function insertItem(event){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "item inserted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "item inserted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("item already existed");
             operationsStatusParagraph.innerHTML = "item already existed";
-            window.location = 'http://localhost:3000/admin/dashboard/store';
+            //window.location = 'http://localhost:3000/admin/dashboard/store';
+            refreshPage();
         }
     };
 
     const insertFormDiv = document.getElementById("insertForm");
     const insertForm = insertFormDiv.children[0];
+
+    if(!insertForm.children[1].value || !insertForm.children[5].value || !insertForm.children[9].value){
+        operationsStatusParagraph.innerHTML = "invalid inputs";
+        return;
+    }
+
     const data = {
         name : insertForm.children[1].value,
         count : insertForm.children[5].value,
@@ -301,4 +318,10 @@ function insertItem(event){
     xhttp.open("POST", "http://localhost:3000/admin/dashboard/store", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(dataToSend);
+}
+
+function refreshPage(){
+    checkedCheckbox.length = 0;
+    getItems(lowNumber,highNumber);
+    disableUpdateForm();
 }

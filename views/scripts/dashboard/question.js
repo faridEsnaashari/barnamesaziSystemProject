@@ -200,20 +200,24 @@ function deleteQuestion(){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "questions deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("question not found");
             operationsStatusParagraph.innerHTML = "questions deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "questions deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
     };
 
@@ -238,15 +242,18 @@ function updateQuestion(event){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "question updated successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "question updated successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
     };
 
@@ -282,25 +289,35 @@ function insertQuestion(event){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "question inserted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "question inserted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("question already existed");
             operationsStatusParagraph.innerHTML = "question already existed";
-            window.location = 'http://localhost:3000/admin/dashboard/question';
+            //window.location = 'http://localhost:3000/admin/dashboard/question';
+            refreshPage();
         }
     };
 
     const insertFormDiv = document.getElementById("insertForm");
     const insertForm = insertFormDiv.children[0];
+
+    if(!insertForm.children[1].value || !insertForm.children[5].value || !insertForm.children[9].value || !insertForm.children[13].value || !insertForm.children[17].value || !insertForm.children[21].value){
+        operationsStatusParagraph.innerHTML = "invalid inputs";
+        return;
+    }
+
     const data = {
         question : insertForm.children[1].value,
         answer1 : insertForm.children[5].value,
@@ -315,4 +332,10 @@ function insertQuestion(event){
     xhttp.open("POST", "http://localhost:3000/admin/dashboard/question", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(dataToSend);
+}
+
+function refreshPage(){
+    checkedCheckbox.length = 0;
+    getQuestions(lowNumber,highNumber);
+    disableUpdateForm();
 }

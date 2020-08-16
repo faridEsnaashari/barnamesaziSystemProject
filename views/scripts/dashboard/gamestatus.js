@@ -193,20 +193,24 @@ function deleteGame(){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "games deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            //window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("game not found");
             operationsStatusParagraph.innerHTML = "games deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            //window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "games deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            //window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
     };
 
@@ -245,6 +249,7 @@ function updateGame(event){
 
     const updateFormDiv = document.getElementById("updateForm");
     const updateForm = updateFormDiv.children[0];
+
     const data = {
         gameId : checkedCheckbox[0],
         label : updateForm.children[1].value,
@@ -270,25 +275,34 @@ function insertGame(event){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "game inserted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            //window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "game inserted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            //window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("game already existed");
             operationsStatusParagraph.innerHTML = "game already existed";
-            window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            //window.location = 'http://localhost:3000/admin/dashboard/gamestatus';
+            refreshPage();
         }
     };
 
     const insertFormDiv = document.getElementById("insertForm");
     const insertForm = insertFormDiv.children[0];
+
+    if(!insertForm.children[1].value || !insertForm.children[5].value){
+        operationsStatusParagraph.innerHTML = "invalid inputs";
+        return;
+    }
     const data = {
         label : insertForm.children[1].value,
         duration : insertForm.children[5].value
@@ -299,4 +313,13 @@ function insertGame(event){
     xhttp.open("POST", "http://localhost:3000/admin/dashboard/gamestatus", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(dataToSend);
+
+    insertForm.children[1].value = "";
+    insertForm.children[5].value = "";
+}
+
+function refreshPage(){
+    checkedCheckbox.length = 0;
+    getGames(lowNumber,highNumber);
+    disableUpdateForm();
 }

@@ -148,20 +148,24 @@ function deleteUser(){
         }
         if (this.readyState == 4 && this.status == 200) {
             operationsStatusParagraph.innerHTML = "users deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/user';
+            //window.location = 'http://localhost:3000/admin/dashboard/user';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 409) {
             console.error("user not found");
             operationsStatusParagraph.innerHTML = "users deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/user';
+            //window.location = 'http://localhost:3000/admin/dashboard/user';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 400) {
             console.error("bad parameter provided");
             operationsStatusParagraph.innerHTML = "users deleted successfully";
-            window.location = 'http://localhost:3000/admin/dashboard/user';
+            //window.location = 'http://localhost:3000/admin/dashboard/user';
+            refreshPage();
         }
         if (this.readyState == 4 && this.status == 403) {
-            window.location = 'http://localhost:3000/admin/login';
+            //window.location = 'http://localhost:3000/admin/login';
+            refreshPage();
         }
     };
 
@@ -223,4 +227,10 @@ function activateDeActivateUser(){
     xhttp.open("PUT", "http://localhost:3000/admin/dashboard/user", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(dataToSend);
+}
+
+function refreshPage(){
+    checkedCheckbox.length = 0;
+    getusers(lowNumber,highNumber);
+    disableUpdateForm();
 }
