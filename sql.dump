@@ -112,11 +112,13 @@ BEGIN
     set active = false
     where id = inputId;
 
-    update gamestatus
+    DROP TABLE IF EXISTS t1;
+    CREATE TEMPORARY TABLE t1 (SELECT id FROM gamestatus WHERE id > inputId order by id limit 1);
+    update gamestatus, t1
     set
-    active = true,
+    gamestatus.active = true,
     startedtime = inputStartedtime
-    where id = inputId+1;
+    where gamestatus.id = t1.id;
     delete from answeredquestion;
     delete from activegamescore;
 END //
