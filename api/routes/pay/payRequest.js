@@ -42,15 +42,15 @@ function handlePayRequest(req, res){
 function sendZarinpallURL(zarinpallResponse, res){
     if (zarinpallResponse.status == 100) {
         const responseJson = {
-            message : zarinpallResponse.url
+            url : zarinpallResponse.url
         };
         responseGenerator.sendJson(res, 200, responseJson);
     }
     else{
         const responseJson = {
-            url : "zarinpall returns an error"
+            message : "zarinpall returns an error"
         };
-        responseGenerator.sendJson(res, 401, responseJson);
+        responseGenerator.sendJson(res, 503, responseJson);
         return;
     }
 }
