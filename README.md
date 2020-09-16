@@ -1651,3 +1651,6 @@ You can read thier document as follow:
 - telegram - [@farid_esnaashar](https://t.me/farid_esnaashar)
 
 https://gitlab.com/tets3/test.git
+
+
+insert into twitts_tbl(text, img_link, user_id, date, replay_to_id) value('twitt text1', 'null', 'b0ab6c88-f7fa-11ea-acdc-dc4a3e8751b4', '1600256980440', '7d7b92a2-f7fb-11ea-acdc-dc4a3e8751b4')
