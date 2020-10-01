@@ -1,7 +1,3 @@
-# Document is under construction.
-
-# last version of the document availabe [here](https://app.swaggerhub.com/apis-docs/fard2000/barnamesaziSystem/1.0.0)
-    
 ## Description
 
 This is a REST API for an app. this api develop with nodejs and use mysql as database manager. There are a couple of entity such as user, game, question and more, what you can manage them by this api. The api has some future like payment gateway and a panel for admin for managing entities stored in database.
@@ -12,24 +8,34 @@ Note: the API root domain is: "https://barnamesazisystemprojectapi-fandoghnamesp
 
 
 - #### [User](https://github.com/faridEsnaashari/barnamesaziSystemProject#user-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#userget-rootendpointuser)
+    - ##### [POST](https://github.com/faridEsnaashari/barnamesaziSystemProject#userpost-rootendpointuser)
+    - ##### [PUT](https://github.com/faridEsnaashari/barnamesaziSystemProject#userput-rootendpointuser)
+    - ##### [DELETE](https://github.com/faridEsnaashari/barnamesaziSystemProject#userdelete-rootendpointuser)
 - #### [Game](https://github.com/faridEsnaashari/barnamesaziSystemProject#games)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#gameget-rootendpointgamestatus)
+    - ##### [POST](https://github.com/faridEsnaashari/barnamesaziSystemProject#gamepost-rootendpointgamestatus)
+    - ##### [PUT](https://github.com/faridEsnaashari/barnamesaziSystemProject#gameput-rootendpointgamestatus)
 - #### [Question](https://github.com/faridEsnaashari/barnamesaziSystemProject#question-1)
-- #### [Store](https://github.com/faridEsnaashari/barnamesaziSystemProject#store-3)
-- #### [Signin](https://github.com/faridEsnaashari/barnamesaziSystemProject#signin)
-- #### [Top score](https://github.com/faridEsnaashari/barnamesaziSystemProject#top-score)
-- #### [Teams Members Number](https://github.com/faridEsnaashari/barnamesaziSystemProject#teams-members-number)
-- #### [Pay](https://github.com/faridEsnaashari/barnamesaziSystemProject#pay)
-    - [get one user](https://github.com/faridEsnaashari/nest-test#title-get-one-user)
-    - [get all user](https://github.com/faridEsnaashari/nest-test#title-get-all-user)
-    - [createUser](https://github.com/faridEsnaashari/nest-test#title-create-user)
-    - [updateUser](https://github.com/faridEsnaashari/nest-test#title-update-user)
-    - [deleteUser](https://github.com/faridEsnaashari/nest-test#title-delete-user)
-- ### [websocket](https://github.com/faridEsnaashari/nest-test#api-documentwebsocket)
-    - [get one user](https://github.com/faridEsnaashari/nest-test#title-get-one-user-1)
-    - [get all user](https://github.com/faridEsnaashari/nest-test#title-get-all-user-1)
-    - [createUser](https://github.com/faridEsnaashari/nest-test#titlecreateuser)
-    - [updateUser](https://github.com/faridEsnaashari/nest-test#titleupdateuser)
-    - [deleteUser](https://github.com/faridEsnaashari/nest-test#titledeleteuser)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#questionget-rootendpointquestion)
+    - ##### [POST](https://github.com/faridEsnaashari/barnamesaziSystemProject#questionpost-rootendpointquestion)
+    - ##### [PUT](https://github.com/faridEsnaashari/barnamesaziSystemProject#questionput-rootendpointquestion)
+    - ##### [DELETE](https://github.com/faridEsnaashari/barnamesaziSystemProject#questiondelete-rootendpointquestion)
+- #### [Store](https://github.com/faridEsnaashari/barnamesaziSystemProject#store-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#storeget-rootendpointstore)
+    - ##### [POST](https://github.com/faridEsnaashari/barnamesaziSystemProject#storepost-rootendpointstore)
+    - ##### [PUT](https://github.com/faridEsnaashari/barnamesaziSystemProject#storeput-rootendpointstore)
+- #### [Signin](https://github.com/faridEsnaashari/barnamesaziSystemProject#signin-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#signinget-rootendpointsignin)
+- #### [Top score](https://github.com/faridEsnaashari/barnamesaziSystemProject#top-score-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#topscoresget-rootendpointtopscores)
+- #### [Teams Members Number](https://github.com/faridEsnaashari/barnamesaziSystemProject#teams-members-number-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#teamsmembersnumberget-rootendpointteamsmembersnumber)
+- #### [Add score](https://github.com/faridEsnaashari/barnamesaziSystemProject#add-score-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#addscoreget-rootendpointaddscore)
+- #### [Pay](https://github.com/faridEsnaashari/barnamesaziSystemProject#pay-1)
+    - ##### [GET](https://github.com/faridEsnaashari/barnamesaziSystemProject#payget-rootendpointpay)
+
 ## User
 With this route you can manage user staff. The allowed operations and methods what you can do for this entity are: 
 
@@ -1435,7 +1441,7 @@ You can use this route to get total number of users in each team. The allowed op
 
 You can read thier document as follow:
 
-#### signin(GET) "*rootEndPoint*/signin":
+#### teamsmembersnumber(GET) "*rootEndPoint*/teamsmembersnumber":
 **Description:** This end point use to get total number of users in each team. 
 
 **Requst parameters:** 
@@ -1649,8 +1655,3 @@ You can read thier document as follow:
 
 - linkdin - [farid esnaashar](https://www.linkedin.com/in/farid-esnaashar-8bb139199)
 - telegram - [@farid_esnaashar](https://t.me/farid_esnaashar)
-
-https://gitlab.com/tets3/test.git
-
-
-insert into twitts_tbl(text, img_link, user_id, date, replay_to_id) value('twitt text1', 'null', 'b0ab6c88-f7fa-11ea-acdc-dc4a3e8751b4', '1600256980440', '7d7b92a2-f7fb-11ea-acdc-dc4a3e8751b4')
