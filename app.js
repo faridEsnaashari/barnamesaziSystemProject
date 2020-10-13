@@ -1,3 +1,7 @@
+const config = require('./config');
+global.env = config.env;
+global.path = config.path;
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const responseGenerator = require('./api/responseGenerator');
