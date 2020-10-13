@@ -1,6 +1,6 @@
 const zarinpalCheckout = require('zarinpal-checkout');
 
-const zarinpal = zarinpalCheckout.create('xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx', true);
+const zarinpal = zarinpalCheckout.create(global.env.ZARINPAL.MERCHANT_ID, true);
 
 function pay(res, amount, userId, callback, itemId){
     zarinpal.PaymentRequest({

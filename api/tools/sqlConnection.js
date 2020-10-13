@@ -1,11 +1,11 @@
 var mysql = require('mysql');
 
 connectionInfo = {
-  host: "localhost",
-  user: "root",
-  password: "13578642sqmy",
-  port: "3306",
-  database: "barnamesaziSystemProject"
+  host: global.env.MYSQL.HOST,
+  user: global.env.MYSQL.USER,
+  password: global.env.MYSQL.PASSWORD,
+  port: global.env.MYSQL.PORT,
+  database: global.env.MYSQL.DATABASE,
 }
 const connection = mysql.createConnection(connectionInfo);
 
