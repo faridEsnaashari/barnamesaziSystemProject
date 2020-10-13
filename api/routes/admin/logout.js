@@ -1,6 +1,3 @@
-const sqlConnection = require('../../sqlConnection');
-const token = require('../../token');
-
 function handleLogout(req, res) {
     if(req.session.token){
         req.session.destroy(function(){

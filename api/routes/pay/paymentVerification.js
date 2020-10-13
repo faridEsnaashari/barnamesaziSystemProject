@@ -1,6 +1,6 @@
 const responseGenerator = require('../../responseGenerator');
-const zarinpal = require('../../zarinpal');
-const sqlConnection = require('../../sqlConnection');
+const zarinpal = require(`${ global.path.tools.zarinpal }`);
+const sqlConnection = require(`${ global.path.tools.mysqlConnection }`);
 
 function handlePaymentVerificationRequest(req, res){
 

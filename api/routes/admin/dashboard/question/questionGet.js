@@ -1,4 +1,4 @@
-const sqlConnection = require('../../../../sqlConnection');
+const sqlConnection = require(`${ global.path.tools.mysqlConnection }`);
 
 function handleQuestion(req, res) {
     if(!req.session.token){

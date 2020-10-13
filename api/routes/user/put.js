@@ -1,6 +1,6 @@
 const responseGenerator = require('../../responseGenerator');
-const sqlConnection = require('../../sqlConnection');
-const token = require('../../token');
+const token = require(`${ global.path.tools.token }`);
+const sqlConnection = require(`${ global.path.tools.mysqlConnection }`);
 
 function handlePutRequest(req, res)
 {

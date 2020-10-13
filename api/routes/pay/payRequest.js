@@ -1,7 +1,7 @@
 const responseGenerator = require('../../responseGenerator');
-const zarinpal = require('../../zarinpal');
-const token = require('../../token');
-const sqlConnection = require('../../sqlConnection');
+const zarinpal = require(`${ global.path.tools.zarinpal }`);
+const token = require(`${ global.path.tools.token }`);
+const sqlConnection = require(`${ global.path.tools.mysqlConnection }`);
 
 function handlePayRequest(req, res){
     if(!checkParameters(req)) {
