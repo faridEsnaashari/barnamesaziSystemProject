@@ -33,28 +33,10 @@ app.use(session({
     saveUninitialized : false,
 }));
 
-const userRoute = require('./api/routes/user/user');
-const gamestatusRoute = require('./api/routes/gamestatus/gamestatus');
-const questionRoute = require('./api/routes/question/question');
-const storeRoute = require('./api/routes/store/store');
-const payRoute = require('./api/routes/pay/pay');
-const signInRoute = require('./api/routes/signIn/signIn');
-const topScoresRoute = require('./api/routes/topScores/topScores');
-const teamsMembersNumberRoute = require('./api/routes/teamMembersNumber/teamMembersNumber');
-const addScoreRoute = require('./api/routes/addScore/addScore');
-const adminRoute = require('./api/routes/admin/admin');
+const v1 = require('./api/v1/v1');
 
-
-app.use('/user', userRoute);
-app.use('/gamestatus', gamestatusRoute);
-app.use('/question', questionRoute);
-app.use('/store', storeRoute);
-app.use('/pay', payRoute);
-app.use('/signin', signInRoute);
-app.use('/topscores', topScoresRoute);
-app.use('/teamsmembersnumber', teamsMembersNumberRoute);
-app.use('/addscore', addScoreRoute);
-app.use('/admin', adminRoute);
+app.use('/', v1);
+app.use('/v1', v1);
 
 
 app.use((req, res, next) => {
