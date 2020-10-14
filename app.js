@@ -4,13 +4,13 @@ global.path = config.path;
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const responseGenerator = require('./api/responseGenerator');
 const hbs = require("express-handlebars");
 const session = require("express-session");
+const responseController = require(global.path.middleware.responser);
 
 const app = express();
 
-
+app.use(responseController());
 
 app.engine("hbs", hbs({
     extname : "hbs",
@@ -34,16 +34,15 @@ app.use(session({
 }));
 
 const v1 = require('./api/v1/v1');
+const v2 = require('./api/v2/v2');
 
 app.use('/', v1);
 app.use('/v1', v1);
+app.use('/v2', v2);
 
 
 app.use((req, res, next) => {
-    const responseJson = {
-        message : "wrong route or method"
-    };
-    responseGenerator.sendJson(res, 404, responseJson);
+    res.responseController.error(404, "wrong route or method");
 });
 
 module.exports = app;
