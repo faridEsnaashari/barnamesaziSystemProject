@@ -39,7 +39,7 @@ const topScoresRoute = require('./api/routes/topScores/topScores');
 const teamsMembersNumberRoute = require('./api/routes/teamMembersNumber/teamMembersNumber');
 const addScoreRoute = require('./api/routes/addScore/addScore');
 const adminRoute = require('./api/routes/admin/admin');
-
+const verifyRoute = require('./api/routes/signIn/verifyPhoneNumber');
 
 app.use('/user', userRoute);
 app.use('/gamestatus', gamestatusRoute);
@@ -51,7 +51,7 @@ app.use('/topscores', topScoresRoute);
 app.use('/teamsmembersnumber', teamsMembersNumberRoute);
 app.use('/addscore', addScoreRoute);
 app.use('/admin', adminRoute);
-
+app.use('/verify',verifyRoute);
 
 app.use((req, res, next) => {
     const responseJson = {

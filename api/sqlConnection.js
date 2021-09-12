@@ -3,7 +3,8 @@ var mysql = require('mysql');
 connectionInfo = {
   host: "localhost",
   user: "root",
-  password: "13578642sqmy",
+  // pass: 13578642sqmy
+  password: "",
   port: "3306",
   database: "barnamesaziSystemProject"
 }

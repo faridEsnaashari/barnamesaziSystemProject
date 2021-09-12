@@ -78,6 +78,7 @@ CREATE TABLE `user` (
   `score` int default 0, 
   `numberofticketused` int default 0,
   `active` boolean default 1 
+  `isVerifiedPhoneNumber` boolean default 0
 );
 
 CREATE TABLE `activegamescore` (
